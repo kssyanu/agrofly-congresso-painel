@@ -62,10 +62,8 @@
     position:relative;z-index:4;margin-top:auto;
     height:560px;width:100%;
   }
-  .photo{
-    position:absolute;inset:0;
-    background:url('https://raw.githubusercontent.com/kssyanu/agrofly-congresso-painel/master/convite/images/evento-aviao.jpg') center 42% / cover no-repeat;
-  }
+  .photo{position:absolute;inset:0;overflow:hidden;}
+  .photo img{width:100%;height:100%;object-fit:cover;object-position:center 42%;display:block;}
   /* topo da foto: borda verde fina (assinatura) + leve fade pro branco */
   .photo-wrap{border-top:6px solid var(--verde);}
   .photo-wrap::before{
@@ -113,7 +111,7 @@
     </div>
 
     <div class="photo-wrap">
-      <div class="photo"></div>
+      <div class="photo"><img src="https://raw.githubusercontent.com/kssyanu/agrofly-congresso-painel/master/convite/images/evento-aviao.jpg" alt="Congresso da Aviação Agrícola"></div>
       <div class="cta-bar">
         <div class="cta-text">
           <div class="l1">Te esperamos no nosso estande.</div>

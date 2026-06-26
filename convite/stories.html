@@ -22,10 +22,8 @@
   }
 
   /* ================= FOTO HERÓI (topo, menor) ================= */
-  .hero{
-    position:absolute;top:0;left:0;right:0;height:820px;z-index:1;
-    background:url('https://raw.githubusercontent.com/kssyanu/agrofly-congresso-painel/master/convite/images/evento-aviao.jpg') center 32% / cover no-repeat;
-  }
+  .hero{position:absolute;top:0;left:0;right:0;height:820px;z-index:1;overflow:hidden;}
+  .hero img{width:100%;height:100%;object-fit:cover;object-position:center 32%;display:block;}
   .hero::before{
     content:"";position:absolute;left:0;right:0;top:0;height:430px;z-index:2;
     background:linear-gradient(180deg,rgba(0,40,60,.60) 0%,rgba(0,40,60,.12) 60%,rgba(0,40,60,0) 100%);
@@ -95,7 +93,7 @@
 </head>
 <body>
   <div class="canvas" data-document-role="page" data-label="Convite Congresso - Stories 9x16">
-    <div class="hero"></div>
+    <div class="hero"><img src="https://raw.githubusercontent.com/kssyanu/agrofly-congresso-painel/master/convite/images/evento-aviao.jpg" alt="Congresso da Aviação Agrícola"></div>
     <div class="hero-edge"></div>
 
     <div class="top">
