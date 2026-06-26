@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:ital,wght@0,500;0,600;0,700;0,800;1,800;1,900&display=swap');
+
+  :root{
+    --navy:#0A2A42;          /* navy/azul-petróleo escuro 2025 */
+    --navy2:#06324B;
+    --azul:#00486C;
+    --verde:#39D27F;         /* verde-menta 2025 */
+    --verde-esc:#0A2A42;     /* texto sobre highlight verde */
+    --branco:#FFFFFF;
+    --cinza-cl:#C7D6DE;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Montserrat',sans-serif;}
+
+  /* canvas 1604x992 = 396x245cm (1,616:1) */
+  .canvas{width:1604px;height:992px;position:relative;overflow:hidden;background:var(--navy);}
+
+  /* ===== FUNDO: foto de ambiente dessaturada + overlay navy ===== */
+  .bg{position:absolute;inset:0;z-index:0;
+    background:url('assets/bg-aviacao.jpg') center 40% / cover no-repeat;
+    filter:saturate(.55) brightness(.9);}
+  .bg-overlay{position:absolute;inset:0;z-index:1;
+    background:linear-gradient(105deg, rgba(10,42,66,.94) 0%, rgba(10,42,66,.80) 42%, rgba(6,50,75,.55) 72%, rgba(6,50,75,.40) 100%);}
+  /* recorte orgânico/diagonal verde (assinatura 2025) separando a base */
+  .wave{position:absolute;left:0;right:0;bottom:128px;height:7px;z-index:5;background:var(--verde);
+    clip-path:polygon(0 40%,100% 0,100% 60%,0 100%);opacity:.92;}
+
+  /* ===== guias de emenda ===== */
+  .seam{position:absolute;top:0;bottom:0;width:1px;border-left:1px dashed rgba(255,120,120,.35);z-index:60;}
+  .seam.s1{left:401px;} .seam.s2{left:802px;} .seam.s3{left:1203px;}
+  .seam-tag{position:absolute;top:6px;left:4px;font-size:9px;color:#f99;font-weight:700;}
+
+  /* ===== TOPO ===== */
+  .logo-chip{position:absolute;top:60px;left:88px;z-index:20;background:#fff;border-radius:16px;padding:16px 22px;
+    box-shadow:0 12px 30px rgba(0,0,0,.28);}
+  .logo{height:80px;display:block;}
+  .parceiro{position:absolute;top:70px;right:88px;z-index:20;display:flex;align-items:center;gap:16px;}
+  .parceiro .txt{text-align:right;color:#fff;}
+  .parceiro .t1{font-size:18px;font-weight:600;color:var(--cinza-cl);letter-spacing:.04em;text-transform:uppercase;}
+  .parceiro .t2{font-size:25px;font-weight:800;letter-spacing:.01em;margin-top:3px;}
+  .parceiro .t2 span{color:var(--verde);}
+  .parceiro .bar{width:4px;height:58px;background:var(--verde);border-radius:2px;}
+
+  /* ===== HERO: frase black itálica + highlight verde ===== */
+  .hero{position:absolute;left:88px;top:248px;width:780px;z-index:15;}
+  .kicker{font-family:'Montserrat';font-size:22px;font-weight:800;color:var(--verde);
+    letter-spacing:.16em;text-transform:uppercase;}
+  .frase{margin-top:18px;font-family:'Anton';font-style:normal;font-size:104px;line-height:.97;
+    color:#fff;text-transform:uppercase;letter-spacing:.005em;}
+  .frase .hl{display:inline-block;background:var(--verde);color:var(--verde-esc);
+    padding:2px 18px 6px;border-radius:14px;transform:skewX(-6deg);}
+  .frase .hl span{display:inline-block;transform:skewX(6deg);}
+  .sub{margin-top:28px;font-size:28px;font-weight:500;color:var(--cinza-cl);line-height:1.42;max-width:600px;}
+
+  /* checklist */
+  .feats{margin-top:40px;display:flex;flex-direction:column;gap:18px;}
+  .feat{display:flex;align-items:center;gap:16px;font-size:27px;font-weight:700;color:#fff;}
+  .feat .chk{width:38px;height:38px;flex:none;border-radius:50%;background:var(--verde);
+    display:flex;align-items:center;justify-content:center;}
+  .feat .chk svg{width:21px;height:21px;color:var(--navy);}
+
+  /* ===== DEVICES (hero visual direito) — iPhone e notebook LADO A LADO ===== */
+  /* área de ~885→1516px (à direita do hero). Base dos dois alinhada em bottom:0. */
+  .devices{position:absolute;right:88px;bottom:300px;width:632px;height:430px;z-index:14;}
+  /* notebook: à direita, base do conjunto */
+  .dev-pc{position:absolute;right:0;bottom:0;width:430px;filter:drop-shadow(0 24px 46px rgba(0,0,0,.42));}
+  /* iPhone: à esquerda do notebook, base alinhada, sem sobreposição */
+  .dev-phone{position:absolute;left:0;bottom:0;height:430px;filter:drop-shadow(0 26px 50px rgba(0,0,0,.5));}
+
+  /* ===== detalhe de círculos (alvo verde) — canto sup. direito, atrás de "Parceiros oficiais" ===== */
+  /* z-index 8 = abaixo do bloco .parceiro (z20) e das devices (z14): não cobre o iPhone */
+  .waves{position:absolute;right:40px;top:30px;width:180px;height:180px;z-index:8;}
+  .waves span{position:absolute;border:3px solid var(--verde);border-radius:50%;opacity:.5;}
+  .waves span:nth-child(1){width:60px;height:60px;right:0;top:60px;}
+  .waves span:nth-child(2){width:110px;height:110px;right:-25px;top:35px;opacity:.32;}
+  .waves span:nth-child(3){width:160px;height:160px;right:-50px;top:10px;opacity:.18;}
+
+  /* ===== PROVAS (sobre base) — faixa full-width logo acima da base ===== */
+  .provas{position:absolute;left:88px;right:88px;bottom:170px;z-index:18;display:flex;align-items:center;justify-content:space-between;gap:0;}
+  .prova{display:flex;align-items:center;gap:15px;color:#fff;}
+  .prova .num{font-family:'Anton';font-size:66px;color:var(--verde);line-height:.85;}
+  .prova .lab{font-size:22px;font-weight:700;line-height:1.14;}
+  .prova .lab .s{display:block;font-size:17px;font-weight:600;color:var(--cinza-cl);margin-top:3px;}
+  .doc-thumb{width:68px;height:88px;border-radius:6px;overflow:hidden;background:#fff;
+    box-shadow:0 10px 24px rgba(0,0,0,.4);flex:none;position:relative;}
+  .doc-thumb img{position:absolute;top:0;left:50%;transform:translateX(-50%);height:100%;}
+  .divisor{width:1px;height:72px;background:rgba(255,255,255,.22);}
+
+  /* ===== BORDA INFERIOR: estatísticas-âncora + contato ===== */
+  /* (logos saíram do rodapé — viram adesivos laterais que o Raldiney imprime;
+      o rodapé fica tampado pelo balcão/mesa, então leva números fortes que aparecem) */
+  .base{position:absolute;left:0;right:0;bottom:0;z-index:20;height:128px;background:#fff;
+    display:flex;align-items:center;padding:0 56px 0 88px;gap:40px;}
+  .base .stats{flex:1;display:flex;align-items:center;gap:0;}
+  .stat{display:flex;align-items:center;gap:15px;}
+  .stat .num{font-family:'Anton';font-size:62px;color:var(--verde);line-height:.82;}
+  .stat .lab{color:var(--navy);font-size:21px;font-weight:800;line-height:1.14;text-transform:uppercase;letter-spacing:.01em;}
+  .stat .lab .s{display:block;font-size:15px;font-weight:600;color:#5A6B76;text-transform:none;letter-spacing:0;margin-top:2px;}
+  .stat-div{width:1px;height:70px;background:#D6E2E8;margin:0 40px;}
+  .contato{flex:none;text-align:right;padding-left:12px;}
+  .contato .pill{display:inline-flex;align-items:center;gap:10px;background:var(--verde);color:var(--navy);
+    font-size:22px;font-weight:800;padding:12px 22px;border-radius:40px;}
+  .contato .pill svg{width:25px;height:25px;flex:none;}
+  .contato .site{display:block;font-size:17px;font-weight:700;color:var(--azul);margin-top:6px;}
+</style>
+</head>
+<body>
+  <div class="canvas" data-document-role="page" data-label="Painel C - Congresso Aviacao Agricola 2026">
+    <div class="bg"></div>
+    <div class="bg-overlay"></div>
+    <div class="wave"></div>
+
+    <div class="logo-chip"><img class="logo" src="assets/logo-agrofly.png" alt="Agrofly Sistemas"></div>
+    <div class="parceiro">
+      <div class="txt">
+        <div class="t1">Parceiros oficiais</div>
+        <div class="t2"><span>SINDAG</span> · IBRAVAG</div>
+      </div>
+      <div class="bar"></div>
+    </div>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="kicker">Tecnologia para aviação agrícola</div>
+      <div class="frase">SUA PLATAFORMA<br>COMPLETA PARA<br><span class="hl"><span>AVIAÇÃO AGRÍCOLA</span></span></div>
+    </div>
+
+    <!-- detalhe de círculos (canto sup. direito, atrás de Parceiros) -->
+    <div class="waves"><span></span><span></span><span></span></div>
+
+    <!-- DEVICES (iPhone + notebook lado a lado) -->
+    <div class="devices">
+      <img class="dev-pc" src="assets/app-pc-trim.png" alt="Sistema no computador">
+      <img class="dev-phone" src="assets/app-iphone-trim.png" alt="App no celular">
+    </div>
+
+    <!-- PROVAS -->
+    <div class="provas">
+      <div class="prova">
+        <div class="doc-thumb"><img src="assets/relatorio-op.png" alt="Relatório"></div>
+        <div class="lab">Relatório aceito<br>pelo MAPA<span class="s">gerado em minutos</span></div>
+      </div>
+      <div class="divisor"></div>
+      <div class="prova">
+        <div class="num">16</div>
+        <div class="lab">estados<span class="s">presença nacional</span></div>
+      </div>
+      <div class="divisor"></div>
+      <div class="prova">
+        <div class="num">+120</div>
+        <div class="lab">empresas<span class="s">atendidas</span></div>
+      </div>
+      <div class="divisor"></div>
+      <div class="prova">
+        <div class="num">+600</div>
+        <div class="lab">pilotos<span class="s">voando com a Agrofly</span></div>
+      </div>
+    </div>
+
+    <!-- BASE: estatísticas-âncora + contato (logos viraram adesivos laterais) -->
+    <div class="base">
+      <div class="stats">
+        <div class="stat">
+          <div class="num">30<small style="font-size:.5em;font-family:'Montserrat';font-weight:900;letter-spacing:-.02em;">M</small></div>
+          <div class="lab">hectares<span class="s">processados na plataforma</span></div>
+        </div>
+        <div class="stat-div"></div>
+        <div class="stat">
+          <div class="num">+130<small style="font-size:.42em;font-family:'Montserrat';font-weight:900;margin-left:4px;">mil</small></div>
+          <div class="lab">ordens de serviço<span class="s">registradas no sistema</span></div>
+        </div>
+      </div>
+      <div class="contato">
+        <span class="pill"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-1.5-.7-2.5-1.3-3.5-3-.3-.5.3-.4.8-1.4.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.3 5.2 4.6 1.9.8 2.7.9 3.6.8.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3M12 2a10 10 0 0 0-8.6 15l-1.4 5 5.2-1.4A10 10 0 1 0 12 2"/></svg>(65) 9 9266-0168</span>
+        <span class="site">agroflysistemas.com.br</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
