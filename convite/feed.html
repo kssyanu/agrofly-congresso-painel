@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  :root{
+    --azul:#00486C;        /* azul-petróleo da ref Raldiney */
+    --azul-claro:#1d6f9c;
+    --verde:#00C46E;       /* verde-esmeralda da ref */
+    --verde-claro:#3FD480;
+    --bg:#FFFFFF;
+    --bg-soft:#F2F7F9;
+    --ink:#0F3147;
+    --cinza:#5A6B76;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Inter',sans-serif;}
+
+  .canvas{
+    width:1080px;height:1350px;position:relative;overflow:hidden;
+    background:var(--bg);
+    display:flex;flex-direction:column;
+  }
+
+  /* ---- faixas verdes geométricas (assinatura visual 2025) — lado direito, acima da foto ---- */
+  .stripes{position:absolute;right:0;top:300px;z-index:2;display:flex;flex-direction:column;gap:13px;align-items:flex-end;}
+  .stripes span{display:block;height:16px;background:var(--verde);border-radius:12px 0 0 12px;opacity:.92;}
+  .stripes span:nth-child(1){width:90px;}
+  .stripes span:nth-child(2){width:160px;}
+  .stripes span:nth-child(3){width:120px;background:var(--azul);}
+
+  /* ---- header ---- */
+  .top{position:relative;z-index:5;padding:54px 64px 0 64px;display:flex;align-items:flex-start;justify-content:space-between;}
+  .logo{height:104px;}
+  .selo-evento{
+    background:var(--azul);color:#fff;border-radius:14px;padding:14px 20px;text-align:right;
+    box-shadow:0 8px 24px rgba(0,72,108,.22);
+  }
+  .selo-evento .ev{font-size:15px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;line-height:1.3;}
+  .selo-evento .data{font-size:13px;font-weight:600;color:var(--verde-claro);letter-spacing:.06em;margin-top:4px;}
+
+  /* ---- bloco de chamada ---- */
+  .headline{position:relative;z-index:5;padding:30px 64px 0 64px;}
+  .kicker{
+    display:inline-block;background:var(--bg-soft);color:var(--azul);
+    font-size:21px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+    padding:11px 20px;border-radius:40px;border:2px solid var(--verde);
+  }
+  .h1{
+    font-size:96px;font-weight:900;line-height:.96;color:var(--azul);
+    letter-spacing:-.02em;margin-top:26px;text-transform:uppercase;
+  }
+  .h1 .g{color:var(--verde);}
+  .sub{
+    font-size:33px;font-weight:500;color:var(--cinza);line-height:1.32;margin-top:26px;max-width:880px;
+  }
+
+  /* ---- foto do evento ---- */
+  .photo-wrap{
+    position:relative;z-index:4;margin-top:auto;
+    height:560px;width:100%;
+  }
+  .photo{
+    position:absolute;inset:0;
+    background:url('https://raw.githubusercontent.com/kssyanu/agrofly-congresso-painel/master/convite/images/evento-aviao.jpg') center 42% / cover no-repeat;
+  }
+  /* topo da foto: borda verde fina (assinatura) + leve fade pro branco */
+  .photo-wrap{border-top:6px solid var(--verde);}
+  .photo-wrap::before{
+    content:"";position:absolute;left:0;right:0;top:0;height:90px;z-index:3;
+    background:linear-gradient(180deg,rgba(255,255,255,.55) 0%,rgba(255,255,255,0) 100%);
+  }
+
+  /* ---- barra CTA sobre a foto ---- */
+  .cta-bar{
+    position:absolute;left:0;right:0;bottom:0;z-index:6;
+    background:linear-gradient(180deg,rgba(0,72,108,0) 0%,rgba(0,72,108,.92) 46%,rgba(0,72,108,.98) 100%);
+    padding:120px 64px 40px 64px;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;
+  }
+  .cta-text{color:#fff;}
+  .cta-text .l1{font-size:30px;font-weight:800;line-height:1.15;}
+  .cta-text .l2{font-size:21px;font-weight:500;color:#cfe8f5;margin-top:7px;letter-spacing:.01em;}
+  .cta-pill{
+    background:var(--verde);color:#062c1c;font-size:24px;font-weight:900;
+    padding:20px 30px;border-radius:50px;white-space:nowrap;letter-spacing:.01em;
+    box-shadow:0 10px 28px rgba(0,196,110,.4);
+  }
+
+  /* ---- rodapé contato (faixa fina) ---- */
+  .foot{
+    position:absolute;left:0;right:0;bottom:0;z-index:7;display:none;
+  }
+</style>
+</head>
+<body>
+  <div class="canvas" data-document-role="page" data-label="Convite Congresso - Feed 4x5">
+    <div class="stripes"><span></span><span></span><span></span></div>
+
+    <div class="top">
+      <img class="logo" src="https://raw.githubusercontent.com/kssyanu/agrofly-congresso-painel/master/convite/images/logo-agrofly.png" alt="Agrofly Sistemas">
+      <div class="selo-evento">
+        <div class="ev">Congresso da<br>Aviação Agrícola</div>
+        <div class="data">18 a 20 · AGOSTO · 2026</div>
+      </div>
+    </div>
+
+    <div class="headline">
+      <span class="kicker">Estaremos lá</span>
+      <div class="h1">VENHA NOS<br><span class="g">VISITAR</span> NO<br>CONGRESSO</div>
+      <div class="sub">Passe no estande da Agrofly Sistemas para conhecer de perto o app e o sistema que documentam a sua operação aérea.</div>
+    </div>
+
+    <div class="photo-wrap">
+      <div class="photo"></div>
+      <div class="cta-bar">
+        <div class="cta-text">
+          <div class="l1">Te esperamos no nosso estande.</div>
+          <div class="l2">Condomínio Aeronáutico Liberty · 18 a 20 de agosto</div>
+        </div>
+        <div class="cta-pill">agroflysistemas.com.br</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

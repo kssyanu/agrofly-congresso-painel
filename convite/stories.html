@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  :root{
+    --azul:#00486C;
+    --verde:#00C46E;
+    --verde-claro:#3FD480;
+    --bg:#FFFFFF;
+    --bg-soft:#F2F7F9;
+    --cinza:#5A6B76;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Inter',sans-serif;}
+
+  .canvas{
+    width:1080px;height:1920px;position:relative;overflow:hidden;
+    background:var(--bg);
+  }
+
+  /* ================= FOTO HERÓI (topo, menor) ================= */
+  .hero{
+    position:absolute;top:0;left:0;right:0;height:820px;z-index:1;
+    background:url('https://raw.githubusercontent.com/kssyanu/agrofly-congresso-painel/master/convite/images/evento-aviao.jpg') center 32% / cover no-repeat;
+  }
+  .hero::before{
+    content:"";position:absolute;left:0;right:0;top:0;height:430px;z-index:2;
+    background:linear-gradient(180deg,rgba(0,40,60,.60) 0%,rgba(0,40,60,.12) 60%,rgba(0,40,60,0) 100%);
+  }
+  /* base da foto funde no branco com curva orgânica suave */
+  .hero::after{
+    content:"";position:absolute;left:-6%;right:-6%;bottom:-2px;height:130px;z-index:3;
+    background:var(--bg);
+    border-radius:50% 50% 0 0 / 100% 100% 0 0;
+  }
+  .hero-edge{
+    position:absolute;left:0;right:0;top:816px;height:7px;z-index:4;background:var(--verde);
+    border-radius:50% 50% 0 0 / 100% 100% 0 0;
+  }
+
+  /* ---- header sobre a foto (safe zone topo ~200px) ---- */
+  .top{position:absolute;top:195px;left:70px;right:70px;z-index:6;display:flex;align-items:flex-start;justify-content:space-between;}
+  .logo-chip{background:#fff;border-radius:18px;padding:16px 22px;box-shadow:0 10px 30px rgba(0,40,60,.25);}
+  .logo{height:78px;display:block;}
+  .selo-evento{
+    background:var(--azul);color:#fff;border-radius:16px;padding:15px 21px;text-align:right;
+    box-shadow:0 10px 28px rgba(0,40,60,.35);
+  }
+  .selo-evento .ev{font-size:18px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;line-height:1.3;}
+  .selo-evento .data{font-size:15px;font-weight:600;color:var(--verde-claro);letter-spacing:.05em;margin-top:6px;}
+
+  /* ================= BLOCO TEXTO (parte branca, com respiro) ================= */
+  .body{
+    position:absolute;top:820px;left:0;right:0;bottom:0;z-index:5;
+    padding:130px 70px 210px 70px;          /* base = safe zone reply */
+    display:flex;flex-direction:column;
+  }
+  .stripes{position:absolute;right:0;top:96px;z-index:2;display:flex;flex-direction:column;gap:13px;align-items:flex-end;}
+  .stripes span{display:block;height:16px;background:var(--verde);border-radius:14px 0 0 14px;opacity:.9;}
+  .stripes span:nth-child(1){width:90px;}
+  .stripes span:nth-child(2){width:160px;}
+  .stripes span:nth-child(3){width:120px;background:var(--azul);}
+
+  .kicker{
+    align-self:flex-start;background:var(--bg-soft);color:var(--azul);
+    font-size:24px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+    padding:14px 26px;border-radius:40px;border:2px solid var(--verde);
+  }
+  .h1{
+    font-size:112px;font-weight:900;line-height:1.0;color:var(--azul);
+    letter-spacing:-.02em;margin-top:54px;text-transform:uppercase;
+  }
+  .h1 .g{color:var(--verde);}
+  .sub{
+    font-size:39px;font-weight:500;color:var(--cinza);line-height:1.4;margin-top:54px;max-width:940px;
+  }
+
+  /* ---- CTA card (empurrado pro fim do bloco, respiro acima) ---- */
+  .cta{
+    margin-top:auto;
+    background:var(--azul);border-radius:30px;padding:44px 46px;
+    display:flex;align-items:center;justify-content:space-between;gap:26px;
+    box-shadow:0 18px 40px rgba(0,72,108,.28);
+  }
+  .cta-text .l1{font-size:44px;font-weight:800;line-height:1.1;color:#fff;}
+  .cta-text .l2{font-size:25px;font-weight:500;color:#bfe0f0;margin-top:11px;}
+  .cta-pill{
+    background:var(--verde);color:#062c1c;font-size:28px;font-weight:900;
+    padding:24px 32px;border-radius:50px;white-space:nowrap;box-shadow:0 8px 22px rgba(0,196,110,.4);
+  }
+</style>
+</head>
+<body>
+  <div class="canvas" data-document-role="page" data-label="Convite Congresso - Stories 9x16">
+    <div class="hero"></div>
+    <div class="hero-edge"></div>
+
+    <div class="top">
+      <div class="logo-chip"><img class="logo" src="https://raw.githubusercontent.com/kssyanu/agrofly-congresso-painel/master/convite/images/logo-agrofly.png" alt="Agrofly Sistemas"></div>
+      <div class="selo-evento">
+        <div class="ev">Congresso da<br>Aviação Agrícola</div>
+        <div class="data">18 a 20 · AGOSTO · 2026</div>
+      </div>
+    </div>
+
+    <div class="body">
+      <div class="stripes"><span></span><span></span><span></span></div>
+      <span class="kicker">Estaremos lá</span>
+      <div class="h1">VENHA NOS<br><span class="g">VISITAR</span> NO<br>CONGRESSO</div>
+      <div class="sub">Passe no estande da Agrofly Sistemas para conhecer de perto o app e o sistema que documentam a sua operação aérea.</div>
+
+      <div class="cta">
+        <div class="cta-text">
+          <div class="l1">Te esperamos lá.</div>
+          <div class="l2">Cond. Aeronáutico Liberty · 18 a 20/08</div>
+        </div>
+        <div class="cta-pill">agroflysistemas.com.br</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
